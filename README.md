@@ -36,16 +36,6 @@ We explicitly configured `parallel_tool_calls: False` within the orchestrator. B
 
 ---
 
-## Repository Structure
-opentarget/
-├── app.py           # Chainlit UI interface entry point
-├── code.py          # Agent initialization and orchestrator logic
-├── tools.py         # 19 discrete GraphQL wrappers for Open Targets API
-├── .env             # Environment variables (GROQ_API_KEY)
-└── public/style.css # Custom UI styling overrides
-
----
-
 ## Getting Started
 
 ### Prerequisites
