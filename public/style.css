@@ -1,0 +1,184 @@
+/* ── Target Mind – Premium Dark Theme ─────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+/* ── Root tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --tm-teal:    #00d4aa;
+  --tm-blue:    #4f8ef7;
+  --tm-purple:  #8b5cf6;
+  --tm-bg:      #0d1117;
+  --tm-surface: #161b22;
+  --tm-border:  #30363d;
+  --tm-text:    #e6edf3;
+  --tm-muted:   #8b949e;
+}
+
+/* ── Global ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body, #root {
+  background-color: var(--tm-bg) !important;
+  font-family: 'Inter', sans-serif !important;
+  color: var(--tm-text) !important;
+}
+
+/* ── App header / nav bar ────────────────────────────────────────────────── */
+header, nav,
+[data-testid="header"],
+.MuiAppBar-root {
+  background: linear-gradient(135deg, #0d1117 0%, #161b22 100%) !important;
+  border-bottom: 1px solid var(--tm-border) !important;
+  box-shadow: 0 1px 24px 0 rgba(0,212,170,.08) !important;
+}
+
+/* ── "Target Mind" hero heading injected via ::before on the chat header ── */
+/* Chainlit renders the assistant name as the page <title> and in the header */
+
+/* Inject a glowing pill above the chat input area */
+.cl-header-title,
+[class*="header"] h1,
+[class*="header"] h2 {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 1.35rem !important;
+  background: linear-gradient(90deg, var(--tm-teal), var(--tm-blue), var(--tm-purple)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* ── Watermark hero banner inside the chat area ─────────────────────────── */
+/* We inject a styled banner as the very first element of the chat column   */
+.step-container:first-child::before,
+[data-testid="chat-messages"]::before {
+  content: "🧬  Target Mind";
+  display: block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(90deg, var(--tm-teal) 0%, var(--tm-blue) 50%, var(--tm-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding: 1.5rem 0 0.25rem;
+  letter-spacing: 0.04em;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+[data-testid="chat-messages"]::after {
+  content: "AI-Powered Biomedical Knowledge  ·  Powered by Open Targets";
+  display: block;
+  font-size: 0.75rem;
+  text-align: center;
+  color: var(--tm-muted);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Shimmer animation ───────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { filter: hue-rotate(0deg);   }
+  50%  { filter: hue-rotate(30deg);  }
+  100% { filter: hue-rotate(0deg);   }
+}
+
+/* ── Chat bubbles ────────────────────────────────────────────────────────── */
+/* User message */
+[data-testid="user-message"],
+.user-message {
+  background: linear-gradient(135deg, #1a2540, #1e2d40) !important;
+  border: 1px solid rgba(79,142,247,.25) !important;
+  border-radius: 16px 16px 4px 16px !important;
+  color: var(--tm-text) !important;
+  box-shadow: 0 2px 12px rgba(79,142,247,.1) !important;
+}
+
+/* Assistant / AI message */
+[data-testid="assistant-message"],
+.assistant-message,
+.step-container {
+  background: linear-gradient(135deg, #161b22, #1a2030) !important;
+  border: 1px solid rgba(0,212,170,.15) !important;
+  border-radius: 16px 16px 16px 4px !important;
+  color: var(--tm-text) !important;
+  box-shadow: 0 2px 16px rgba(0,212,170,.06) !important;
+}
+
+/* ── Tool call / step UI ────────────────────────────────────────────────── */
+[data-testid="step"],
+.step-header {
+  background: rgba(139,92,246,.08) !important;
+  border-left: 3px solid var(--tm-purple) !important;
+  border-radius: 8px !important;
+  margin: 4px 0 !important;
+  font-size: 0.82rem !important;
+  color: var(--tm-muted) !important;
+}
+
+/* ── Message composer / input bar ───────────────────────────────────────── */
+[data-testid="message-composer"],
+textarea,
+.message-input {
+  background: var(--tm-surface) !important;
+  border: 1px solid var(--tm-border) !important;
+  border-radius: 12px !important;
+  color: var(--tm-text) !important;
+  font-family: 'Inter', sans-serif !important;
+  transition: border-color .2s ease;
+}
+
+[data-testid="message-composer"]:focus-within,
+textarea:focus {
+  border-color: var(--tm-teal) !important;
+  box-shadow: 0 0 0 3px rgba(0,212,170,.12) !important;
+  outline: none !important;
+}
+
+/* ── Send button ─────────────────────────────────────────────────────────── */
+button[type="submit"],
+[data-testid="send-button"] {
+  background: linear-gradient(135deg, var(--tm-teal), var(--tm-blue)) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  transition: transform .15s ease, box-shadow .15s ease !important;
+}
+
+button[type="submit"]:hover,
+[data-testid="send-button"]:hover {
+  transform: translateY(-1px) scale(1.04) !important;
+  box-shadow: 0 4px 18px rgba(0,212,170,.35) !important;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+[data-testid="sidebar"],
+aside {
+  background: var(--tm-surface) !important;
+  border-right: 1px solid var(--tm-border) !important;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar            { width: 6px; height: 6px; }
+::-webkit-scrollbar-track      { background: var(--tm-bg); }
+::-webkit-scrollbar-thumb      { background: var(--tm-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover{ background: var(--tm-muted); }
+
+/* ── Code blocks in responses ────────────────────────────────────────────── */
+pre, code {
+  background: #0d1117 !important;
+  border: 1px solid var(--tm-border) !important;
+  border-radius: 8px !important;
+  font-size: 0.85em !important;
+}
+
+/* ── Markdown links ──────────────────────────────────────────────────────── */
+a { color: var(--tm-teal) !important; text-decoration: none !important; }
+a:hover { text-decoration: underline !important; }
+
+/* ── Typing indicator / loader dots ─────────────────────────────────────── */
+.cl-typing-indicator span {
+  background-color: var(--tm-teal) !important;
+}
