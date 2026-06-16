@@ -10,23 +10,6 @@ Developed as part of a Bachelor's Thesis Project (BTP) at IIIT Delhi.
 
 The framework utilizes a decoupled orchestration pattern where a central Orchestrator manages state, plans execution paths, and delegates tasks to domain-specific specialist agents. Agents interact directly with the Open Targets GraphQL endpoint.
 
-                     User Query (Natural Language)
-                                │
-                                ▼
-┌─────────────────────────────────────────────────────────--┐
-│                    Orchestrator Agent                     │
-│         (Execution Planning & State Management)           │
-└──────────┬──────────┬──────────┬──────────┬───────────────┘
-           │          │          │          │
-           ▼          ▼          ▼          ▼
-       Search      Target     Disease      Drug      Fan-out
-        Agent       Agent       Agent       Agent      Agent
-        │          │          │          │          │
-        └──────────┴──────────┴──────────┴──────────┘
-                                        
-                                │
-                                ▼
-                        Open Targets GraphQL API
 
 ### Agent Registry & Tool Mapping
 
