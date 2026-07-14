@@ -8,7 +8,6 @@ __pycache__/
 *.so
 
 # Environments
-.venv
 env/
 venv/
 ENV/
@@ -21,3 +20,6 @@ venv.bak/
 
 # Chainlit
 .chainlit/
+
+# Interview Prep files
+interview*.md
