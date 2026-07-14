@@ -2,7 +2,6 @@ import os
 from dotenv import load_dotenv
 from phi.agent import Agent
 from phi.model.groq import Groq
-from phi.model.openai import OpenAIChat
 import time
 
 from tools import (
