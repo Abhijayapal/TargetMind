@@ -29,7 +29,7 @@ from tools import (
 load_dotenv()
 
 # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-MODEL = "llama3-70b-8192"  # stable, production-ready Groq model
+MODEL = "qwen/qwen3.6-27b"  # Active supported Groq model
 
 
 def make_model():
