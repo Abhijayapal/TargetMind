@@ -13,6 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the working directory contents into the container at /app
 COPY . .
 
+# Ensure logs directory exists for observability.py
+RUN mkdir -p logs && chmod 777 logs
+
 # Default port (can be overridden by the hosting provider)
 ENV PORT=8000
 EXPOSE $PORT

@@ -19,7 +19,7 @@ async def on_message(message: cl.Message):
     if not user_input:
         return
 
-    async with cl.Step(name="🧬 Target Mind is thinking…", type="run") as step:
+    async with cl.Step(name=" Target Mind is thinking…", type="run") as step:
         step.input = user_input
 
         import asyncio
@@ -39,7 +39,7 @@ async def on_message(message: cl.Message):
     else:
         await cl.Message(
             content=(
-                "⚠️ Sorry, I couldn't get a response from Open Targets. "
+                " Sorry, I couldn't get a response from Open Targets. "
                 "Please try rephrasing your query."
             )
         ).send()

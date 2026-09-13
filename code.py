@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from phi.agent import Agent
 from phi.model.groq import Groq
+from observability import log_agent_call, log_error
 import time
 
 from tools import (
@@ -28,7 +29,7 @@ from tools import (
 load_dotenv()
 
 # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-MODEL = "llama-3.3-70b-versatile"
+MODEL = "llama3-70b-8192"  # stable, production-ready Groq model
 
 
 def make_model():
@@ -421,20 +422,33 @@ orchestrator = Agent(
     markdown=True,
 )
 
+@log_agent_call(agent_name="AgentRunner")
 def run_with_retry(agent, user_input: str, max_retries: int = 3, delay: float = 1.0):
     for attempt in range(1, max_retries + 1):
         try:
             response = agent.run(user_input)
+            
+            # Guardrails - Validate output before returning
+            if not response or not response.content or not response.content.strip():
+                raise ValueError("Agent returned an empty or null response.")
+                
+            content_lower = response.content.lower()
+            if "entity_id=unknown" in content_lower or "entity_id=none" in content_lower:
+                raise ValueError("Agent hallucinated an unknown ENTITY_ID.")
+                
+            if "failed to call a function" in content_lower or "tool_use_failed" in content_lower:
+                raise ValueError("Agent leaked a tool execution failure to the output.")
+                
             return response
+            
         except Exception as e:
             error_str = str(e)
-            if "tool_use_failed" in error_str or "Failed to call a function" in error_str:
-                if attempt < max_retries:
-                    print(f" Tool call malformed (attempt {attempt}/{max_retries}), retrying in {delay}s...")
-                    time.sleep(delay)
-                else:
-                    print(f" Failed after {max_retries} attempts. Try rephrasing your query.")
-                    return None
+            log_error(f"Retry attempt {attempt}/{max_retries} failed", e, query=user_input[:100])
+            
+            if attempt < max_retries:
+                print(f" Validation failed: {error_str} (retrying {attempt}/{max_retries} in {delay}s...)")
+                time.sleep(delay)
             else:
-                raise
+                print(f" Failed after {max_retries} attempts. Reason: {error_str}")
+                return None
 
